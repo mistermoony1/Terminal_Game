@@ -8,9 +8,14 @@ int random_gen();                     //Generates a Random number between 1 - 10
 void game();
 void init();
 
+int room1(hero h1, orc o1);
+int room2();
+int room3(hero h1, orc o1);
+
+int key;		// if they have the key
+
 int main()
 {
-  orc o1;
 
   init();
   game();
@@ -21,7 +26,10 @@ int main()
 
 void init(){
   cout << "You awaken in a dark room, holding in your hand a rusty sword. How did you get here? Where is here? What is happening to you?" << endl;
-  cout << "Before we begin there are a few things to sort out:" <<endl;
+  cout << "Before we begin there are a few things to sort out:" << endl;
+
+  key = 0;
+  return;
 }
 
 void game()
@@ -31,14 +39,29 @@ void game()
 
   string command;
 
+  int direction = 1;
+
+ 
+  int i = 0;	//debug only
+
   while(1){
 
+  	if(direction == 1){
+	  direction = room1(h1, o1);
+	}
+	else if(direction == 2){
+		direction = room2();
+	}
+	else if(direction == 3){
+		direction = room3(h1, o1);
+	}
 
+	i++;
 
-
-
-  combat_instance(h1, o1);
-  return;
+	if(i == 5){
+		return;
+	}
+  
   }
 
 }
@@ -108,3 +131,65 @@ int random_gen()
 
   return((rand() % 100)+1);
 }
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// rooms
+
+int room1(hero h1, orc o1){
+
+	string path;
+
+	cout << "Looking around the room you are in you can see there are two options, a heavy looking door to the north and a path to the east:" << endl;
+	cout << "Which route do you take?" << endl;
+
+	cin >> path;
+
+	while(1){
+	if((path == "north" || path == "North" || path == "n") && key == 1){
+
+		cout << "You use the key in the lock, and the door swings open." << endl;
+		return 3;
+	}
+	else if(path == "north" || path == "North" || path == "n" && h1.classtype() == 0){
+
+		cout << "The door is locked, but thanks to your great strength you are able to force it open." << endl << endl;
+		return 3;
+	}
+	else if(path == "north" || path == "North" || path == "n" && h1.classtype() == 2){
+
+		cout << "You realise that the door is locked, but you are able to pick it using your superior intelligence." << endl;
+		return 3;
+	}
+	else if(path == "north" || path == "North" || path == "n" && h1.classtype() == 1){
+
+		cout << "The door appears to be locked, but you have neither the strength to force it or the smarts to pick it." << endl;
+		return 1;
+	}
+	else if(path == "east" || path == "East" || path == "e"){
+		cout << "You travel down the path leading east." << endl;
+		return 2;
+	}
+	}
+
+}
+
+int room2(){
+
+	cout << "Hello There im room 2" << endl;
+	key = 1;
+	return 1;
+}
+
+int room3(hero h1, orc o1){
+
+	cout << "Hi im room 3" << endl;
+
+	combat_instance(h1, o1);
+
+	return 1;
+}
+
+
+

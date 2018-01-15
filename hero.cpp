@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
@@ -34,6 +35,7 @@ class hero: public creature         ////////////////////////////////////////////
 private:
   int speed, crit_chance;
   string type;
+  int type_num;               //0 for strong, 1 for fast, 2 for smart
 
 
 public:
@@ -41,6 +43,8 @@ public:
 
   void print_stats();
   hero();
+
+  int classtype();
 
 
 };
@@ -56,18 +60,21 @@ hero::hero(void)
       HP = 15;
       speed = 5;
       crit_chance = 10;
+      type_num = 0;
       return;
     }
     else if(type == "Fast" || type == "fast" || type == "F" || type == "f"){
       HP = 10;
       speed = 15;
       crit_chance = 5;
+      type_num = 1;
       return;
     }
     else if(type == "Smart" || type == "smart"){
       HP = 5;
       speed = 10;
       crit_chance = 15;
+      type_num = 2;
       return;
     }
     else{
@@ -91,6 +98,10 @@ int hero::damage()
   else{
     return ((speed / 5)+2);
   }
+}
+
+int hero::classtype(){
+  return type_num;
 }
 
 
