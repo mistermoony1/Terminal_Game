@@ -8,6 +8,7 @@ int combat_instance(hero h1, orc o1); //Instances combat with an orc
 int random_gen();                     //Generates a Random number between 1 - 100
 void game();
 void init();
+void gameend();
 
 int room1(hero h1, orc o1);
 int room2();
@@ -59,8 +60,14 @@ void game()
 
 	i++;
 
-	if(i == 5){
+	if(direction == 4){
+		gameend();
 		return;
+	}
+	else if(direction == 5){
+		cout << "You dead motherfucker";
+		return;
+
 	}
 
   }
@@ -95,7 +102,7 @@ int combat_instance(hero h1, orc o1)
     else if(command == "Run" || command == "run" || command == "r" || command == "R"){
       if(random_gen() > 50){
         cout << "You successfuly flee!" << endl;
-        return 0;
+        return 2;
       }
       else{
         cout << "You fail to escape." << endl;
@@ -118,12 +125,36 @@ int combat_instance(hero h1, orc o1)
 
     if(o1.health() <= 0){
       cout << "You have slain the beast!" << endl;
+          return 0 ;
     }
     else{
       cout << "You died!" << endl;
+      return 5;
     }
-    return 0 ;
 
+
+}
+
+void gameend()
+{
+	cout << "Having slain the orc you take a look around the room. In the corner is a large chest, and a passage leads to the north." << endl;
+	cout << "Inside the chest is a rusty shield, which you take. Now to continue onwards, and hopefully find the answers to the questions that plague you." << endl << endl;
+
+	cout << "You have completed this basic trial, please gib me £50 for next installment. Much AAA promise." << endl << endl;
+
+	cout << "Enter Quit to leave." << endl;
+
+	string leave;
+
+	while(1){
+		cin >> leave;
+	if(leave == "Quit"){
+		return;
+	}
+	else{
+		cout << "Theres nothing you can do Speng, enter Quit" << endl;
+	}
+}
 }
 
 int random_gen()
@@ -184,14 +215,14 @@ int room1(hero h1, orc o1){
 int room2(){
 
   string command;
-  int i;
+  int i = 0;
 
 	cout << "The passage leads to a small dark room, with no other exits. A small key sits in the middle of the floor." << endl;
   cout << "What would you like to do?" << key << endl;
 
   while(1){
   getline(cin, command);
-  cout << "command is =" << int(command[0]) << "=" << endl;
+  //cout << "command is =" << int(command[0]) << "=" << endl;
 
   if((command ==  "Take Key" || command == "take key" || command =="Pick up key" || command == "pick up key" || command == "Take key" || command == "take") && key == 0){
     cout << endl << "You pick up the Key." << endl;
@@ -210,9 +241,17 @@ int room2(){
 
 int room3(hero h1, orc o1){
 
-	cout << "Hi im room 3" << endl;
+	cout << "You enter a stone room, and immediately in your face is a loathsome orc." << endl;
 
-	combat_instance(h1, o1);
+	int temp = combat_instance(h1, o1);
 
-	return 1;
+	if(temp == 2){
+		return 1;
+	}
+	else if(temp == 5){
+		return 5;
+	}
+	else{
+		return 4;
+	}
 }
