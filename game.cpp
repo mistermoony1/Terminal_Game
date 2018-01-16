@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdio>
 #include "hero.cpp"
 
 using namespace std;
@@ -41,7 +42,7 @@ void game()
 
   int direction = 1;
 
- 
+
   int i = 0;	//debug only
 
   while(1){
@@ -61,7 +62,7 @@ void game()
 	if(i == 5){
 		return;
 	}
-  
+
   }
 
 }
@@ -144,9 +145,11 @@ int room1(hero h1, orc o1){
 	cout << "Looking around the room you are in you can see there are two options, a heavy looking door to the north and a path to the east:" << endl;
 	cout << "Which route do you take?" << endl;
 
-	cin >> path;
+
 
 	while(1){
+    	cin >> path;
+
 	if((path == "north" || path == "North" || path == "n") && key == 1){
 
 		cout << "You use the key in the lock, and the door swings open." << endl;
@@ -171,15 +174,38 @@ int room1(hero h1, orc o1){
 		cout << "You travel down the path leading east." << endl;
 		return 2;
 	}
+  else{
+    cout << "Invalid Command" << endl;
+  }
 	}
 
 }
 
 int room2(){
 
-	cout << "Hello There im room 2" << endl;
-	key = 1;
-	return 1;
+  string command;
+  int i;
+
+	cout << "The passage leads to a small dark room, with no other exits. A small key sits in the middle of the floor." << endl;
+  cout << "What would you like to do?" << key << endl;
+
+  while(1){
+  getline(cin, command);
+  cout << "command is =" << int(command[0]) << "=" << endl;
+
+  if((command ==  "Take Key" || command == "take key" || command =="Pick up key" || command == "pick up key" || command == "Take key" || command == "take") && key == 0){
+    cout << endl << "You pick up the Key." << endl;
+    key = 1;
+    continue;
+  }
+  else if(command ==  "back" || command == "Back" || command =="West" || command == "west"){
+    return 1;
+  }
+  else if(i != 0){
+    cout << "Invalid command" << endl;
+  }
+  i++;
+  }
 }
 
 int room3(hero h1, orc o1){
@@ -190,6 +216,3 @@ int room3(hero h1, orc o1){
 
 	return 1;
 }
-
-
-
